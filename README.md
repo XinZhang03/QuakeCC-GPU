@@ -21,11 +21,14 @@ QuakeCC-GPU/
 
 ## Install
 
-Use Python 3.10+, a CUDA-compatible PyTorch installation, and a C++17 compiler with OpenMP. Install the remaining dependencies in that environment:
+Use Python 3.12, a CUDA 13.0-capable NVIDIA driver, and a C++17 compiler with OpenMP. The versions in `requirements.txt` match the tested `gpu_5090` `gputorch` environment. Install the CUDA-enabled PyTorch wheel first, then the pinned dependencies:
 
 ```bash
+python -m pip install torch==2.10.0 --index-url https://download.pytorch.org/whl/cu130
 python -m pip install -r requirements.txt
 ```
+
+For a different CUDA platform, install its compatible PyTorch build and adjust the `torch` pin accordingly.
 
 The merger source is compiled to `bin/merge_obs` automatically when required.
 

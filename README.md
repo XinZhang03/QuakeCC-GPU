@@ -16,18 +16,32 @@ QuakeCC-GPU/
 ├── 0_gpu_cut_events.py
 ├── 1_prepare_gpu_input.py
 ├── 2_gpu_ph2cc.py
+└── environment.yml
 ```
 
 ## Install
 
-Use Python 3.12, a CUDA 13.0-capable NVIDIA driver, and a C++17 compiler with OpenMP. The versions in `requirements.txt` match the tested `gpu_5090` `gputorch` environment. Install the CUDA-enabled PyTorch wheel first, then the pinned dependencies:
+Use Conda and a C++17 compiler with OpenMP. `environment.yml` creates the `gpucc` environment and pins the Python and signal-processing dependencies. PyTorch is installed separately because its CUDA build must match the NVIDIA driver on each machine:
+
+```bash
+conda env create -f environment.yml
+conda activate gpucc
+nvidia-smi
+```
+
+Choose one PyTorch command based on the driver. For CUDA 13 support (NVIDIA R580 or newer), matching the tested `gpu_5090` environment:
 
 ```bash
 python -m pip install torch==2.10.0 --index-url https://download.pytorch.org/whl/cu130
-python -m pip install -r requirements.txt
 ```
 
-For a different CUDA platform, install its compatible PyTorch build and adjust the `torch` pin accordingly.
+For a machine whose driver reports CUDA 12.4, use the CUDA 12.4 build instead:
+
+```bash
+python -m pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cu124
+```
+
+NVIDIA's [CUDA compatibility guide](https://docs.nvidia.com/deploy/cuda-compatibility/minor-version-compatibility.html) lists driver support; PyTorch's [version guide](https://pytorch.org/get-started/previous-versions/) lists available CUDA builds. Do not install both PyTorch builds.
 
 The merger source is compiled to `bin/merge_obs` automatically when required.
 

@@ -29,17 +29,7 @@ conda activate gpucc
 nvidia-smi
 ```
 
-Choose one PyTorch command based on the driver. For CUDA 13 support (NVIDIA R580 or newer), matching the tested `gpu_5090` environment:
-
-```bash
-python -m pip install torch==2.10.0 --index-url https://download.pytorch.org/whl/cu130
-```
-
-For a machine whose driver reports CUDA 12.4, use the CUDA 12.4 build instead:
-
-```bash
-python -m pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cu124
-```
+Choose one PyTorch command based on the driver. Please refer the correlation website.
 
 NVIDIA's [CUDA compatibility guide](https://docs.nvidia.com/deploy/cuda-compatibility/minor-version-compatibility.html) lists driver support; PyTorch's [version guide](https://pytorch.org/get-started/previous-versions/) lists available CUDA builds. Do not install both PyTorch builds.
 

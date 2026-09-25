@@ -2,18 +2,19 @@
 
 from pathlib import Path
 
-
-
+ROOT = Path(__file__).resolve().parent
+INPUT = ROOT / "input"
+OUTPUT = ROOT / "output"
 
 class Config(object):
     def __init__(self):
         # Inputs and output locations
-        self.fpha_name = "input/Cahuilla_2018-08-15.pha"               # Phase catalog
-        self.fsta =  "input/Cahuilla.sta"                 # NET.STA and coordinates
-        self.data_dir =  "input/waveforms"                 # Contains YYYYMMDD/ waveform dirs
-        self.zarr_root = "output/zarr_root"               # Cut phase windows
-        self.gpu_input_dir = "output/gpu_input_dir"       # Prepared station-pair tasks
-        self.output_dir =  "output/output_dir"             # Final dt.cc and temporary records
+        self.fpha_name = str(INPUT / "Cahuilla_2018-08-15.pha")  # Phase catalog
+        self.fsta = str(INPUT / "Cahuilla.sta")                  # NET.STA and coordinates
+        self.data_dir = str(INPUT / "waveforms")                 # Contains YYYYMMDD/ waveform dirs
+        self.zarr_root = str(OUTPUT / "zarr_root")               # Cut phase windows
+        self.gpu_input_dir = str(OUTPUT / "gpu_input_dir")       # Prepared station-pair tasks
+        self.output_dir = str(OUTPUT / "output_dir")             # Final dt.cc and temporary records
 
         # Waveform processing; times are seconds relative to the phase pick
         self.samp_rate = 1000             # Target rate (Hz); cubic interpolation if resampling

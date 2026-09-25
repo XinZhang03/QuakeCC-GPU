@@ -71,8 +71,3 @@ For large catalogs, the cut-window Zarr store can grow substantially. Set `zarr_
 
 [PALM](https://github.com/YijianZhou/PALM) and [AI-PAL](https://github.com/YijianZhou/AI-PAL) can supply associated, located events and phase picks for QuakeCC-GPU. Convert those products to QuakeCC's `.pha` layout: event rows contain `origin_time,latitude,longitude,depth_km,magnitude,event_id`; pick rows contain `NET.STA,P_time,S_time`, using `-1` for a missing pick. Use the matching station file and continuous waveforms.
 
-The native output requires unique, nonnegative integer event IDs below `2^20`; map PAL/AI-PAL IDs if needed and retain that mapping. QuakeCC's `dt.cc` can then be paired with an `event.dat` built from the same event-ID mapping for the PALM/HypoDD relocation workflow. PALM documents `event.dat` and `dt.cc` as the HypoDD inputs; verify the output and catalog IDs together before relocation.
-
-## Input formats
-
-Station rows are `NET.STA,latitude,longitude,elevation`. Phase picks are absolute timestamps. The channel indices in `config.py` are zero-based positions in the sorted E/N/Z waveform components. The bundled Cahuilla waveforms are used directly by the example; no downloader script is required.

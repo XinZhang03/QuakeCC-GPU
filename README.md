@@ -6,7 +6,7 @@ GPU-accelerated waveform cross-correlation for earthquake relocation. The packag
 
 ```text
 QuakeCC-GPU/
-├── input/                 # Phase catalog, station metadata, downloaded waveforms
+├── input/                 # Phase catalog, station metadata, bundled example waveforms
 ├── src/                   # Readers, signal helpers, GPU code, merger source
 ├── bin/merge_obs          # Native merger (built automatically when needed)
 ├── output/
@@ -16,7 +16,6 @@ QuakeCC-GPU/
 ├── 0_gpu_cut_events.py
 ├── 1_prepare_gpu_input.py
 ├── 2_gpu_ph2cc.py
-└── example_data_download.py
 ```
 
 ## Install
@@ -34,10 +33,9 @@ The merger source is compiled to `bin/merge_obs` automatically when required.
 
 ## Run the Cahuilla example
 
-The compact example uses 37 events from 20 minutes on **2018-08-15**, the busiest day in the Cahuilla catalog, and eight stations. Download its 24-minute, three-component waveform snippets, then run the stages from the project root:
+The compact example uses 37 events from 20 minutes on **2018-08-15**, the busiest day in the Cahuilla catalog, and eight stations. Its 24-minute, three-component waveform snippets are included in `input/waveforms/20180815/`, so no download step is needed. Run the stages from the project root:
 
 ```bash
-python example_data_download.py
 python 0_gpu_cut_events.py
 python 1_prepare_gpu_input.py
 python 2_gpu_ph2cc.py
@@ -63,7 +61,7 @@ input/waveforms/
     └── AZ.BZN..HHZ.mseed
 ```
 
-The files must cover all picks and configured windows, with enough lead-in for filter warm-up. Files are sorted by name and their component order must match `chn_p`/`chn_s`; the example assumes E, N, Z. Stations with missing components or a different number of miniSEED files are skipped.
+The files must cover all picks and configured windows, with enough lead-in for filter warm-up. Files are sorted by name and their component order must match `chn_p`/`chn_s`; the example assumes E, N, Z. Stations with missing components or a different number of miniSEED files are skipped. The bundled sample is from the AZ ANZA Regional Network and CI Southern California Seismic Network, accessed through EarthScope and SCEDC. Cite the networks ([AZ DOI](https://doi.org/10.7914/SN/AZ), [CI DOI](https://doi.org/10.7914/SN/CI)) and the [SCEDC dataset](https://doi.org/10.7909/C3WD3xH1) when using these waveforms. The waveform data are separate from the repository's MIT-licensed software. The data centers provide [EarthScope citation guidance](https://www.earthscope.org/terms-of-service/) and [SCEDC citation guidance](https://scedc.caltech.edu/about/citation.html).
 
 ### Put Zarr on a large-volume disk
 
@@ -77,4 +75,4 @@ The native output requires unique, nonnegative integer event IDs below `2^20`; m
 
 ## Input formats
 
-Station rows are `NET.STA,latitude,longitude,elevation`. Phase picks are absolute timestamps. The channel indices in `config.py` are zero-based positions in the sorted E/N/Z waveform components. The example downloader skips files already present; use `--overwrite` to fetch them again.
+Station rows are `NET.STA,latitude,longitude,elevation`. Phase picks are absolute timestamps. The channel indices in `config.py` are zero-based positions in the sorted E/N/Z waveform components. The bundled Cahuilla waveforms are used directly by the example; no downloader script is required.
